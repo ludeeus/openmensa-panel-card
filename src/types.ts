@@ -1,7 +1,7 @@
 import { ActionConfig } from 'custom-card-helpers';
 
 // TODO Add your configuration elements here for type-checking
-export interface OpenMensaCardConfig {
+export interface OpenMensaPanelCardConfig {
   type: string;
   entity: string;
   name?: string;

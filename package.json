@@ -1,5 +1,5 @@
 {
-  "name": "openmensa-card",
+  "name": "openmensa-panel-card",
   "version": "0.0.1",
   "description": "Lovelace openmensa-card",
   "keywords": [
@@ -11,8 +11,8 @@
     "custom-cards",
     "openmensa"
   ],
-  "module": "openmensa-card.js",
-  "repository": "git@github.com:mfdlr/openmensa-card.git",
+  "module": "openmensa-panel-card.js",
+  "repository": "git@github.com:mfdlr/openmensa-panel-card.git",
   "author": "Martin Fiedler <mf@mfdlr.de>",
   "license": "MIT",
   "dependencies": {
@@ -25,6 +25,7 @@
     "@babel/core": "^7.6.4",
     "@babel/plugin-proposal-class-properties": "^7.5.5",
     "@babel/plugin-proposal-decorators": "^7.4.0",
+    "@rollup/plugin-image": "^2.0.0",
     "@rollup/plugin-json": "^4.0.0",
     "@typescript-eslint/eslint-plugin": "^2.6.0",
     "@typescript-eslint/parser": "^2.6.0",

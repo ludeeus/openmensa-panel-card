@@ -1,5 +1,6 @@
 import typescript from 'rollup-plugin-typescript2';
 import commonjs from 'rollup-plugin-commonjs';
+import image from '@rollup/plugin-image';
 import nodeResolve from 'rollup-plugin-node-resolve';
 import babel from 'rollup-plugin-babel';
 import { terser } from 'rollup-plugin-terser';
@@ -21,6 +22,7 @@ const serveopts = {
 const plugins = [
   nodeResolve({}),
   commonjs(),
+  image(),
   typescript(),
   json(),
   babel({
@@ -32,7 +34,7 @@ const plugins = [
 
 export default [
   {
-    input: 'src/openmensa-card.ts',
+    input: 'src/openmensa-panel-card.ts',
     output: {
       dir: 'dist',
       format: 'es',

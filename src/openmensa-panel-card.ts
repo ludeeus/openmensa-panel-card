@@ -11,23 +11,27 @@ import {
 
 import './editor';
 
-import { OpenMensaCardConfig } from './types';
+import { OpenMensaPanelCardConfig } from './types';
 import { actionHandler } from './action-handler-directive';
 import { CARD_VERSION } from './const';
 
 import { localize } from './localize/localize';
 
-/* eslint no-console: 0 */
+/* eslint-disable */
+import logo_vegan from './vegan.png';
+import logo_vegetarian from './vegetarian.png';
+
+/* eslint no-console: 1 */
 console.info(
   `%c  OPENMENSA-CARD \n%c  ${localize('common.version')} ${CARD_VERSION}    `,
   'color: orange; font-weight: bold; background: black',
   'color: white; font-weight: bold; background: dimgray',
 );
 
-@customElement('openmensa-card')
-export class OpenMensaCard extends LitElement {
+@customElement('openmensa-panel-card')
+export class OpenMensaPanelCard extends LitElement {
   public static async getConfigElement(): Promise<LovelaceCardEditor> {
-    return document.createElement('openmensa-card-editor') as LovelaceCardEditor;
+    return document.createElement('openmensa-panel-card-editor') as LovelaceCardEditor;
   }
 
   public static getStubConfig(): object {
@@ -36,9 +40,9 @@ export class OpenMensaCard extends LitElement {
 
   // TODO Add any properities that should cause your element to re-render here
   @property() public hass?: HomeAssistant;
-  @property() private _config?: OpenMensaCardConfig;
+  @property() private _config?: OpenMensaPanelCardConfig;
 
-  public setConfig(config: OpenMensaCardConfig): void {
+  public setConfig(config: OpenMensaPanelCardConfig): void {
     // TODO Check for required fields and that they are of the proper format
     if (!config || !config.entity || config.show_error) {
       throw new Error(localize('common.invalid_configuration'));
@@ -63,21 +67,34 @@ export class OpenMensaCard extends LitElement {
       return html``;
     }
 
+    let error = 'common.show_warning';
+    let show_error = false;
+    const stateObj = this.hass.states[this._config.entity];
+
+    if (!this._config.entity) {
+      error = 'common.invalid_configuration';
+      show_error = true;
+    } else if (!stateObj) {
+      error = 'common.invalid_entity';
+      show_error = true;
+    }
+
     // TODO Check for stateObj or other necessary things and render a warning if missing
-    if (this._config.show_warning) {
+    if (this._config.show_warning || show_error) {
       return html`
         <ha-card>
-          <div class="warning">${localize('common.show_warning')}</div>
+          <div class="warning">${localize(error)}</div>
         </ha-card>
       `;
     }
 
-    const stateObj = this.hass.states[this._config.entity];
     const entries: TemplateResult[] = [];
 
     for (const category of stateObj.attributes.categories) {
       const name: string = category.name;
       const meals: TemplateResult[] = [];
+      const vegan: boolean = name.toLowerCase().indexOf(localize('common.vegan')) > -1;
+      const vegetarian: boolean = name.toLowerCase().indexOf(localize('common.vegetarian')) > -1;
 
       for (const meal of category.meals) {
         meals.push(html`
@@ -87,11 +104,16 @@ export class OpenMensaCard extends LitElement {
         `);
       }
 
+      const show_vegan = (vegan ? html`<img width="16px" alt="${localize('common.vegan')}" src=${logo_vegan}>` : '')
+      const show_vegetarian = (vegetarian ? html`<img width="16px" alt="${localize('common.vegetarian')}" src=${logo_vegetarian}>` : '')
+
       entries.push(html`
-        <div class="row">
+        <ha-card class="category">
           <div class="menuname">${name}</div>
+          ${show_vegan}
+          ${show_vegetarian}
           <div class="meallist">${meals}</div>
-        </div>
+        </ha-card>
       `);
     }
 
@@ -107,7 +129,9 @@ export class OpenMensaCard extends LitElement {
         tabindex="0"
         aria-label=${`OpenMensa: ${this._config.entity}`}
       >
-        ${entries}
+        <div class="menu">
+          ${entries}
+        </div>
       </ha-card>
     `;
   }
@@ -126,6 +150,11 @@ export class OpenMensaCard extends LitElement {
         background-color: #fce588;
         padding: 8px;
       }
+      .menu {
+        display: flex;
+        flex-wrap: wrap;
+        align-content: space-between;
+      }
       .menuname {
         font-size: 1.2em;
         font-weight: var(--mcg-title-font-weight, 500);
@@ -137,9 +166,12 @@ export class OpenMensaCard extends LitElement {
       .meallist {
       }
       .mealname {
+        padding-top: 8px;
       }
-      .row {
+      .category {
         padding: 0px 16px 16px;
+        margin: 0px 0px 16px 16px;
+        width: 15.7%;
       }
     `;
   }

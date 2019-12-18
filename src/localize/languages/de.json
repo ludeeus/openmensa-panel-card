@@ -2,6 +2,9 @@
   "common": {
     "version": "Version",
     "invalid_configuration": "Ungültige Konfiguration",
-    "show_warning": "Zeige Warnung"
+    "invalid_entity": "Fehlerhafte oder fehlende Entität",
+    "show_warning": "Zeige Warnung",
+    "vegan": "vegan",
+    "vegetarian": "vegetarisch"
   }
 }

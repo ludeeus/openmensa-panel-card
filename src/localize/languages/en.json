@@ -5,6 +5,7 @@
     "invalid_entity": "Invalid or missing entity",
     "show_warning": "Show Warning",
     "vegan": "vegan",
-    "vegetarian": "vegetarian"
+    "vegetarian": "vegetarian",
+    "noentries": "There are no meals offered today - sorry."
   }
 }

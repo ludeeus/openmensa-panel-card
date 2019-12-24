@@ -5,6 +5,7 @@
     "invalid_entity": "Fehlerhafte oder fehlende Entität",
     "show_warning": "Zeige Warnung",
     "vegan": "vegan",
-    "vegetarian": "vegetarisch"
+    "vegetarian": "vegetarisch",
+    "noentries": "Heute werden leider keine Gerichte angeboten."
   }
 }

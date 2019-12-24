@@ -79,7 +79,7 @@ export class OpenMensaPanelCard extends LitElement {
       show_error = true;
     }
 
-    // TODO Check for stateObj or other necessary things and render a warning if missing
+    // Check for stateObj or other necessary things and render a warning if missing
     if (this._config.show_warning || show_error) {
       return html`
         <ha-card>
@@ -89,6 +89,7 @@ export class OpenMensaPanelCard extends LitElement {
     }
 
     const entries: TemplateResult[] = [];
+    let noentries: TemplateResult = html``;
 
     for (const category of stateObj.attributes.categories) {
       const name: string = category.name;
@@ -117,6 +118,11 @@ export class OpenMensaPanelCard extends LitElement {
       `);
     }
 
+    if (entries.length == 0)
+    {
+      noentries = html`<div class="noentries">${localize('common.noentries')}</div>`;
+    }
+
     return html`
       <ha-card
         .header=${this._config.name}
@@ -129,6 +135,7 @@ export class OpenMensaPanelCard extends LitElement {
         tabindex="0"
         aria-label=${`OpenMensa: ${this._config.entity}`}
       >
+        ${noentries}
         <div class="menu">
           ${entries}
         </div>
@@ -172,6 +179,8 @@ export class OpenMensaPanelCard extends LitElement {
         padding: 0px 16px 16px;
         margin: 0px 0px 16px 16px;
         width: 15.7%;
+      }
+      .noentries {        
       }
     `;
   }

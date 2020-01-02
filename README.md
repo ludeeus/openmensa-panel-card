@@ -1,4 +1,4 @@
-# Openmensa panel card 
+# Openmensa Panel lovelace card 
 
 A simple card to show OpenMensa values on a panel for Home Assistant Lovelace. What will your cantine serve today?
 

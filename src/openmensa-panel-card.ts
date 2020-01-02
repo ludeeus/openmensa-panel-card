@@ -13,20 +13,12 @@ import './editor';
 
 import { OpenMensaPanelCardConfig } from './types';
 import { actionHandler } from './action-handler-directive';
-import { CARD_VERSION } from './const';
 
 import { localize } from './localize/localize';
 
 /* eslint-disable */
 import logo_vegan from './vegan.png';
 import logo_vegetarian from './vegetarian.png';
-
-/* eslint no-console: 1 */
-console.info(
-  `%c  OPENMENSA-CARD \n%c  ${localize('common.version')} ${CARD_VERSION}    `,
-  'color: orange; font-weight: bold; background: black',
-  'color: white; font-weight: bold; background: dimgray',
-);
 
 @customElement('openmensa-panel-card')
 export class OpenMensaPanelCard extends LitElement {
@@ -44,7 +36,7 @@ export class OpenMensaPanelCard extends LitElement {
 
   public setConfig(config: OpenMensaPanelCardConfig): void {
     // TODO Check for required fields and that they are of the proper format
-    if (!config || !config.entity || config.show_error) {
+    if (!config || !config.entity) {
       throw new Error(localize('common.invalid_configuration'));
     }
 
@@ -53,7 +45,7 @@ export class OpenMensaPanelCard extends LitElement {
     }
 
     this._config = {
-      name: 'OpenMensa',
+      name: 'OpenMensa Panel',
       ...config,
     };
   }
@@ -80,7 +72,7 @@ export class OpenMensaPanelCard extends LitElement {
     }
 
     // Check for stateObj or other necessary things and render a warning if missing
-    if (this._config.show_warning || show_error) {
+    if (show_error) {
       return html`
         <ha-card>
           <div class="warning">${localize(error)}</div>
@@ -105,8 +97,8 @@ export class OpenMensaPanelCard extends LitElement {
         `);
       }
 
-      const show_vegan = (vegan ? html`<img width="16px" alt="${localize('common.vegan')}" src=${logo_vegan}>` : '')
-      const show_vegetarian = (vegetarian ? html`<img width="16px" alt="${localize('common.vegetarian')}" src=${logo_vegetarian}>` : '')
+      const show_vegan = this._config.show_icons && (vegan ? html`<img width="16px" alt="${localize('common.vegan')}" src=${logo_vegan}>` : '')
+      const show_vegetarian = this._config.show_icons && (vegetarian ? html`<img width="16px" alt="${localize('common.vegetarian')}" src=${logo_vegetarian}>` : '')
 
       entries.push(html`
         <ha-card class="category">
@@ -180,7 +172,8 @@ export class OpenMensaPanelCard extends LitElement {
         margin: 0px 0px 16px 16px;
         width: 15.7%;
       }
-      .noentries {        
+      .noentries {
+        margin: 0px 0px 16px 16px;
       }
     `;
   }

@@ -14,4 +14,5 @@ Hey dude! Help me out for a couple of :beers: or a :coffee:!
 ## TODO
 - [x] redesign, use less space
 - [x] include icons
+- [x] initial i18n (de, en)
 - [ ] cleanup editor

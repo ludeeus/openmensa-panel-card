@@ -70,17 +70,9 @@ export class BoilerplateCardEditor extends LitElement implements LovelaceCardEdi
     return '';
   }
 
-  get _show_warning(): boolean {
+  get _show_icons(): boolean {
     if (this._config) {
-      return this._config.show_warning || false;
-    }
-
-    return false;
-  }
-
-  get _show_error(): boolean {
-    if (this._config) {
-      return this._config.show_error || false;
+      return this._config.show_icons || true;
     }
 
     return false;
@@ -219,18 +211,11 @@ export class BoilerplateCardEditor extends LitElement implements LovelaceCardEdi
                 ></paper-input>
                 <br />
                 <ha-switch
-                  aria-label=${`Toggle warning ${this._show_warning ? 'off' : 'on'}`}
-                  .checked=${this._show_warning !== false}
-                  .configValue=${'show_warning'}
+                  aria-label=${`Toggle warning ${this._show_icons ? 'off' : 'on'}`}
+                  .checked=${this._show_icons !== false}
+                  .configValue=${'show_icons'}
                   @change=${this._valueChanged}
-                  >Show Warning?</ha-switch
-                >
-                <ha-switch
-                  aria-label=${`Toggle error ${this._show_error ? 'off' : 'on'}`}
-                  .checked=${this._show_error !== false}
-                  .configValue=${'show_error'}
-                  @change=${this._valueChanged}
-                  >Show Error?</ha-switch
+                  >Show food icons?</ha-switch
                 >
               </div>
             `

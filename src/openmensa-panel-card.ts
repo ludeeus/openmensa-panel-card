@@ -157,7 +157,6 @@ export class OpenMensaPanelCard extends LitElement {
       .menuname {
         font-size: 1.2em;
         font-weight: var(--mcg-title-font-weight, 500);
-        max-height: 1.4em;
         min-height: 1.4em;
         opacity: 0.65;
         padding-top: 8px;
@@ -170,7 +169,7 @@ export class OpenMensaPanelCard extends LitElement {
       .category {
         padding: 0px 16px 16px;
         margin: 0px 0px 16px 16px;
-        width: 15.7%;
+        width: calc(100% / 3 - 54px);
       }
       .noentries {
         margin: 0px 0px 16px 16px;
